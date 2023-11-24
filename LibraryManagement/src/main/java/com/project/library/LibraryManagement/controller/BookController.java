@@ -1,7 +1,9 @@
 package com.project.library.LibraryManagement.controller;
 
 import com.project.library.LibraryManagement.Entities.Books;
+import com.project.library.LibraryManagement.Entities.Users;
 import com.project.library.LibraryManagement.repository.BookRepository;
+import com.project.library.LibraryManagement.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +20,19 @@ import static org.springframework.http.ResponseEntity.notFound;
 public class BookController
 {
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService;
 
     // Get all books
-    @GetMapping
+    @GetMapping("/all")
     public List<Books> getAllBooks()
     {
-        return bookRepository.findAll();
+        return bookService.getAllBooks();
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<Books> getBookById(@PathVariable Integer id)
     {
-        Optional<Books> requestedBook = bookRepository.findById(id);
+        Optional<Books> requestedBook = bookService.getBookById(id);
 
         return requestedBook.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
     }
@@ -38,41 +40,62 @@ public class BookController
 
 
     @GetMapping("/author/{authorName}")
-    public ResponseEntity<Books> getBooksByAuthorName(@PathVariable String authorName)
+    public ResponseEntity<Books> findByAuthorrName(@PathVariable String authorName)
     {
-        Optional<Books> book = bookRepository.findByAuthorName(authorName);
+        Optional<Books> book = bookService.findBooksByAuthorName(authorName);
         return book.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
     }
 
 
     @GetMapping("/pubName/{publisherName}")
-    public ResponseEntity<List<Books>> getBooksByPublisherName(@PathVariable String publisherName)
+    public ResponseEntity<Books> getBooksByPublisherName(@PathVariable String publisherName)
     {
-        Optional<List<Books>> book = bookRepository.findByPublisherNameContaining(publisherName);
+        Optional<Books> book = bookService.findBooksByPublisherName(publisherName);
         return book.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Books> createBook(@RequestBody Books book) {
-        Books savedBook = bookRepository.save(book);
+        Books savedBook = bookService.createBooks(book);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Books> updateBook(@PathVariable Integer id, @RequestBody Books updatedBook) {
-        if (!bookRepository.existsById(id)) {
-            return notFound().build();
-        }
-        updatedBook.setBookId(id);
-        Books savedBook = bookRepository.save(updatedBook);
-        return ResponseEntity.ok(savedBook);
+    public ResponseEntity<Books> updateBookById(@PathVariable Integer id, @RequestBody Books updatedBook) {
+        Books updatedBookData = bookService.updateBookById(id, updatedBook);
+        return ResponseEntity.ok(updatedBookData);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Integer id) {
-        if (!bookRepository.existsById(id)) {
-            return notFound().build();
-        }
-        bookRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        bookService.deleteBookById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/authorAndPublisher")
+    public List<Books> getBooksByAuthorAndPublisherName(@RequestParam String authorName,@RequestParam String publisherName)
+    {
+        List<Books> user = bookService.findAuthorAndPublisherName(authorName, publisherName);
+        return user;
+    }
+
+    @GetMapping("/title")
+    public List<Books> getBooksByTitle(@RequestParam String title)
+    {
+        List<Books> books = bookService.findBooksByTitle(title);
+        return books;
+    }
+
+    @GetMapping("/publicationYear")
+    public List<Books> getBooksByPublicationYear(@RequestParam Long publicationYear)
+    {
+        List<Books> books = bookService.getBooksByPublicationYear(publicationYear);
+        return books;
+    }
+
+    @DeleteMapping("/authorName")
+    public ResponseEntity<Void> deleteBooksByAuthorName(@RequestParam String authorName)
+    {
+        bookService.deleteBooksByAuthorName(authorName);
+        return ResponseEntity.ok().build();
     }
 }

@@ -75,7 +75,7 @@ public class UserService
         }
     }
 
-    public List<Users> findByLastNameAndFirstName(String lastName, String firstName)
+    public List<Users> findLastNameAndFirstName(String lastName, String firstName)
     {
         return userRepository.findByLastNameAndFirstName(lastName, firstName);
     }

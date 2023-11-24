@@ -43,6 +43,7 @@ public class Copies
     )
     private Books book;
 
+    private Integer noOfCopies; // not added yet
 
     @Column(name = "availability_status")
     @Enumerated(EnumType.STRING)

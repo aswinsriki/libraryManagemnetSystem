@@ -20,6 +20,7 @@ public interface UserRepository extends JpaRepository<Users, Integer>
 //    @Query("UPDATE Users u SET u.firstName = :firstName WHERE u.id = :userId")
 //    void setFirstName(@Param("userId") Long userId, @Param("firstName") String firstName);
 
+    // custom jpql query methods
     List<Users> findByLastNameAndFirstName(String lastName, String firstName);
 
     Users findByFirstName(String firstName);

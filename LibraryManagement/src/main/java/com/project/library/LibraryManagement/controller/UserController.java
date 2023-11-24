@@ -72,7 +72,7 @@ public class UserController
     @GetMapping("/lastNameAndFirstName")
     public List<Users> findByLastNameAndFirstName(@RequestParam String lastName, @RequestParam String firstName)
     {
-            return userService.findByLastNameAndFirstName(lastName, firstName);
+            return userService.findLastNameAndFirstName(lastName, firstName);
     }
 
     @GetMapping("/searchByFirstName")
