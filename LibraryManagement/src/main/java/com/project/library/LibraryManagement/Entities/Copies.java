@@ -42,4 +42,28 @@ public class Copies
             referencedColumnName = "bookId"
     )
     private Books book;
+
+
+    @Column(name = "availability_status")
+    @Enumerated(EnumType.STRING)
+    private AvailabilityStatus availabilityStatus;
+
+
+    @Column(name="physical_condition")
+    @Enumerated(EnumType.STRING)
+    private PhysicalCondition physicalCondition;
+
+    public enum AvailabilityStatus
+    {
+        AVAILABLE,
+        BORROWED,
+        DAMAGED
+    }
+
+    public enum PhysicalCondition
+    {
+        GOOD,
+        FAIR,
+        DAMAGED
+    }
 }

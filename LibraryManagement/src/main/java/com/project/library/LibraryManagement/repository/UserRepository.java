@@ -22,9 +22,11 @@ public interface UserRepository extends JpaRepository<Users, Integer>
 
     List<Users> findByLastNameAndFirstName(String lastName, String firstName);
 
-    List<Users> findByFirstName(String firstName);
+    Users findByFirstName(String firstName);
 
-    @Query("SELECT u FROM Users u WHERE u.lastName = :lastName")
-    Optional<Users> findByLastName(String lastName);
+    List<Users> findByLastName(String lastName);
 
+    List<Users> findByEmailId(String emailId);
+
+    Optional<Users> findByUserType(Integer id);
 }

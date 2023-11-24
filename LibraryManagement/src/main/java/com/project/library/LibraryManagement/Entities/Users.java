@@ -38,4 +38,16 @@ public class Users
     private String emailId;
     private String address;
     private Long userPhoneNo;
+
+
+    @Column(name = "user_type")
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
+
+    public enum UserType
+    {
+        ADMIN,
+        GUEST,
+        STUDENT
+    }
 }

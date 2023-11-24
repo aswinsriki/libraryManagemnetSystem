@@ -67,4 +67,16 @@ public class Transactions
 
     @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Fines fine;
+
+    public enum TransactionStatus
+    {
+        PAID,
+        UNPAID,
+        PARTIALLYPAID
+    }
+
+
+    @Column(name = "transaction_status")
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus transactionStatus;
 }

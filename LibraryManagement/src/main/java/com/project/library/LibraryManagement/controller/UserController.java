@@ -20,46 +20,41 @@ import static org.springframework.http.ResponseEntity.notFound;
 @RequestMapping("/api/users/")
 public class UserController
 {
-    @Autowired
-    private UserRepository userRepository;
-
 
     @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public List<Users> getAllUsers()
     {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Users> createUser(@RequestBody Users user)
     {
-        Users savedUser = userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+        Users createdUser = userService.createUser(user);
+        return ResponseEntity.ok(createdUser);
     }
+
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Integer id)
     {
-        if(!userRepository.existsById(id))
-        {
-            return notFound().build();
-        }
-        userRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        userService.deleteUserById(id);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Users> updateUserById(@PathVariable Integer id, @RequestBody Users updatedUser)
     {
-        if (!userRepository.existsById(id)) {
-            return notFound().build();
-        }
-        updatedUser.setUserId(id);
-        Users savedUser = userRepository.save(updatedUser);
-        return ResponseEntity.ok(savedUser);
+        Users updatedUserData = userService.updateUserById(id, updatedUser);
+        return ResponseEntity.ok(updatedUserData);
     }
 
 //    @PutMapping("{firstName}")
@@ -75,47 +70,39 @@ public class UserController
 //    }
 
     @GetMapping("/lastNameAndFirstName")
-    public ResponseEntity<?> findByLastNameAndFirstName(
-            @RequestParam String lastName,
-            @RequestParam String firstName) {
-
-        List<Users> users = userService.findUserByLastNameAndFirstName(lastName, firstName);
-
-        if (!users.isEmpty()) {
-            return ResponseEntity.ok(users);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No users found with the given last name and first name");
-        }
-    }
-
-    @GetMapping("/FirstName")
-    public ResponseEntity<?> getUserByFirstName(@RequestParam String firstName) {
-
-        List<Users> users = userService.findUserByFirstName(firstName);
-
-        if (!users.isEmpty())
-        {
-            return ResponseEntity.ok(users);
-        }
-        else
-        {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No users found with the given first name");
-        }
-    }
-
-
-    @GetMapping("/lastName")
-    public ResponseEntity<?> getUserByLastName(@RequestParam String lastName)
+    public List<Users> findByLastNameAndFirstName(@RequestParam String lastName, @RequestParam String firstName)
     {
-        Optional<Users> userOptional = userService.getUserByLastName(lastName);
+            return userService.findByLastNameAndFirstName(lastName, firstName);
+    }
 
-        if (userOptional.isPresent()) {
-            return ResponseEntity.ok(userOptional.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null); // Or provide an appropriate message or object
-        }
+    @GetMapping("/searchByFirstName")
+    public ResponseEntity<Users> getUserByFirstName(@RequestParam String firstName)
+    {
+        Users user = userService.getUserByFirstName(firstName);
+        return ResponseEntity.ok(user);
+    }
+
+
+    @GetMapping("/searchByLastName")
+    public ResponseEntity<List<Users>> getUserLastName(@RequestParam String lastName)
+    {
+        List<Users> user = userService.getUserByLastName(lastName);
+        return ResponseEntity.ok(user);
+    }
+
+
+    @GetMapping("/searchUserByEmailId")
+    public ResponseEntity<List<Users>> getUsersByEmailId(@RequestParam String emailId)
+    {
+        List<Users> user = userService.getUserByEmailId(emailId);
+        return ResponseEntity.ok(user);
+    }
+
+
+    @PutMapping("/updateUserType")
+    public ResponseEntity<Users> updateUserType(@RequestParam Integer id, @RequestBody Users updatedUser)
+    {
+        Users updatedUserData = userService.updateUserTypeValue(id, updatedUser);
+        return ResponseEntity.ok(updatedUserData);
     }
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
 public class UserService
 {
     @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public List<Users> findUserByLastNameAndFirstName(String lastName, String firstName)
     {
@@ -21,11 +21,95 @@ public class UserService
     }
 
 
-    public List<Users> findUserByFirstName(String firstName) {
+    public Users findUserByFirstName(String firstName)
+    {
         return userRepository.findByFirstName(firstName);
     }
 
-    public Optional<Users> getUserByLastName(String lastName) {
+    @Autowired
+    public UserService(UserRepository userRepository)
+    {
+        this.userRepository = userRepository;
+    }
+
+    public List<Users> getAllUsers()
+    {
+        return userRepository.findAll();
+    }
+
+    public Users createUser(Users user)
+    {
+        return userRepository.save(user);
+    }
+
+    public void deleteUserById(Integer id)
+    {
+        userRepository.deleteById(id);
+    }
+
+    public Users updateUserById(Integer id, Users updatedUser)
+    {
+        Optional<Users> existingUserOptional = userRepository.findById(id);
+
+        if (existingUserOptional.isPresent())
+        {
+            Users existingUser = existingUserOptional.get();
+
+            existingUser.setFirstName(updatedUser.getFirstName());
+
+            existingUser.setLastName(updatedUser.getLastName());
+
+            existingUser.setAddress(updatedUser.getAddress());
+
+            existingUser.setUserType(updatedUser.getUserType());
+
+            existingUser.setUserPhoneNo(updatedUser.getUserPhoneNo());
+
+            existingUser.setEmailId(updatedUser.getEmailId());
+
+            return userRepository.save(existingUser);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public List<Users> findByLastNameAndFirstName(String lastName, String firstName)
+    {
+        return userRepository.findByLastNameAndFirstName(lastName, firstName);
+    }
+
+    public Users getUserByFirstName(String firstName)
+    {
+        return userRepository.findByFirstName(firstName);
+    }
+
+    public List<Users> getUserByLastName(String lastName)
+    {
         return userRepository.findByLastName(lastName);
+    }
+
+    public List<Users> getUserByEmailId(String emailId)
+    {
+        return userRepository.findByEmailId(emailId);
+    }
+
+    public Users updateUserTypeValue(Integer id, Users updatedUser)
+    {
+        Optional<Users> existingUserOptional = userRepository.findById(id);
+
+        if (existingUserOptional.isPresent())
+        {
+            Users existingUser = existingUserOptional.get();
+
+            existingUser.setUserType(updatedUser.getUserType());
+
+            return userRepository.save(existingUser);
+        }
+        else
+        {
+            return null;
+        }
     }
 }
