@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.ResponseEntity.notFound;
+
 @RestController
 @ResponseBody
 @RequestMapping("/api/books")
@@ -25,12 +27,29 @@ public class BookController
         return bookRepository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Books> getBookById(@PathVariable Integer id)
     {
         Optional<Books> requestedBook = bookRepository.findById(id);
 
-        return requestedBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return requestedBook.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
+    }
+
+
+
+    @GetMapping("/author/{authorName}")
+    public ResponseEntity<Books> getBooksByAuthorName(@PathVariable String authorName)
+    {
+        Optional<Books> book = bookRepository.findByAuthorName(authorName);
+        return book.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
+    }
+
+
+    @GetMapping("/pubName/{publisherName}")
+    public ResponseEntity<List<Books>> getBooksByPublisherName(@PathVariable String publisherName)
+    {
+        Optional<List<Books>> book = bookRepository.findByPublisherNameContaining(publisherName);
+        return book.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
     }
 
     @PostMapping
@@ -38,11 +57,10 @@ public class BookController
         Books savedBook = bookRepository.save(book);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<Books> updateBook(@PathVariable Integer id, @RequestBody Books updatedBook) {
         if (!bookRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            return notFound().build();
         }
         updatedBook.setBookId(id);
         Books savedBook = bookRepository.save(updatedBook);
@@ -52,7 +70,7 @@ public class BookController
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Integer id) {
         if (!bookRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            return notFound().build();
         }
         bookRepository.deleteById(id);
         return ResponseEntity.noContent().build();

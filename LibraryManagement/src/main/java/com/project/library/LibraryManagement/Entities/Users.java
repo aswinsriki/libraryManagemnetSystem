@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "users")
 public class Users
 {
     @Id
@@ -25,8 +27,15 @@ public class Users
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
-    private Integer UserID;
+
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Transactions> transactions = new ArrayList<>();
+
+
+    private Integer UserId;
     private String firstName;
     private String lastName;
     private String emailId;
+    private String address;
+    private Long userPhoneNo;
 }

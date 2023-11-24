@@ -6,11 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "copies")
 public class Copies
 {
     @Id
@@ -24,6 +28,11 @@ public class Copies
             generator = "copy_sequence"
     )
     private int copyId;
+
+//
+//    @OneToMany(mappedBy = "copies", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Transactions> Copies = new ArrayList<>();
+
 
     @ManyToOne(
             cascade = CascadeType.ALL

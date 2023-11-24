@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,8 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name = "books")
-public class Books
-{
+public class Books {
     @Id
     @SequenceGenerator(
             name = "book_sequence",
@@ -28,6 +28,7 @@ public class Books
     )
     private Integer bookId;
     private String title;
+
     @Column(name = "publisher_name")
     private String publisherName;
 
@@ -45,4 +46,18 @@ public class Books
 //            referencedColumnName = "bookId"
 //    )
 //    private List<Copies> copies;
+
+//    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Transactions> Copies = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Transactions> Transactions = new ArrayList<>();
+
+
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Author author;
+
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Publisher publisher;
 }
+
