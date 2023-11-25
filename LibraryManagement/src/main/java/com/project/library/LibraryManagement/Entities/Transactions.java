@@ -50,7 +50,8 @@ public class Transactions
             cascade = CascadeType.ALL
     )
     @JoinColumn(
-            referencedColumnName = "UserId"
+            name = "user_id",
+            referencedColumnName = "userId"
     )
     private Users user;
 
@@ -65,14 +66,16 @@ public class Transactions
     private Copies copy;
 
 
-    @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(
+            mappedBy = "transaction",
+            cascade = CascadeType.ALL
+    )
     private Fines fine;
 
     public enum TransactionStatus
     {
         PAID,
         UNPAID,
-        PARTIALLYPAID
     }
 
 

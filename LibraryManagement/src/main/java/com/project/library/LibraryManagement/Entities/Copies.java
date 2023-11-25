@@ -29,10 +29,6 @@ public class Copies
     )
     private int copyId;
 
-//
-//    @OneToMany(mappedBy = "copies", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Transactions> Copies = new ArrayList<>();
-
 
     @ManyToOne(
             cascade = CascadeType.ALL
@@ -43,7 +39,15 @@ public class Copies
     )
     private Books book;
 
-    private Integer noOfCopies; // not added yet
+
+    @OneToMany(
+            mappedBy = "copy",
+            orphanRemoval = true
+    )
+    private List<Transactions> transactions;
+
+
+    private Integer noOfCopies;
 
     @Column(name = "availability_status")
     @Enumerated(EnumType.STRING)

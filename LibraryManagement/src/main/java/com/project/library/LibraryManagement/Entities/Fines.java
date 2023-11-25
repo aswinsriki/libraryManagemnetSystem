@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -33,9 +34,16 @@ public class Fines
     private Transactions transaction;
 
 
-    private Long fineAmount;
+    private BigDecimal fineAmount;
 
     private String paymentStatus;
 
     private LocalDate paymentDate;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "user_id",
+            referencedColumnName = "userId"
+    )
+    private Users user;
 }

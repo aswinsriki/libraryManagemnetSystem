@@ -32,7 +32,7 @@ public class Users
 //    private List<Transactions> transactions = new ArrayList<>();
 
 
-    private Integer UserId;
+    private Integer userId;
     private String firstName;
     private String lastName;
     private String emailId;
@@ -50,4 +50,10 @@ public class Users
         GUEST,
         STUDENT
     }
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL
+    )
+    private List<Transactions> transaction;
 }

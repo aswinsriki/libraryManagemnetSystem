@@ -47,17 +47,48 @@ public class Books {
 //    )
 //    private List<Copies> copies;
 
-//    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Transactions> Copies = new ArrayList<>();
-//
+    @OneToMany(
+            mappedBy = "book",
+            orphanRemoval = true
+    )
+    private List<Transactions> transactions;
+
 //    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Transactions> Transactions = new ArrayList<>();
 
+    @OneToMany(
+            mappedBy = "book",
+            orphanRemoval = true
+    )
+    private List<Copies> copies;
 
-    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne
+    @JoinColumn(
+            name = "author_id",
+            referencedColumnName = "authorId"
+    )
     private Author author;
 
-    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @ManyToOne
+    @JoinColumn(
+            name = "publisher_id",
+            referencedColumnName = "publisherId"
+    )
     private Publisher publisher;
+
+    @ManyToMany
+    @JoinTable(
+            name = "book_user_map",
+            joinColumns = @JoinColumn(
+                    name = "book_id",
+                    referencedColumnName = "bookId"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "userId"
+            )
+    )
+    private List<Users> users;
 }
 

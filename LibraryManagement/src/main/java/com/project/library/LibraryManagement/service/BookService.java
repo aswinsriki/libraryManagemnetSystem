@@ -1,11 +1,16 @@
 package com.project.library.LibraryManagement.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.library.LibraryManagement.Entities.Books;
 import com.project.library.LibraryManagement.Entities.Users;
 import com.project.library.LibraryManagement.repository.BookRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,5 +86,22 @@ public class BookService {
     public void deleteBooksByAuthorName(String authorName)
     {
         bookRepository.deleteByAuthorName(authorName);
+    }
+
+    @PostConstruct
+    public void loadDataOnStartup()
+    {
+        try
+        {
+            ObjectMapper om = new ObjectMapper();
+            ClassPathResource resource = new ClassPathResource("books.json");
+            File file = resource.getFile();
+            List<Books> books = om.readValue(file, om.getTypeFactory().constructCollectionType(List.class, Books.class));
+            bookRepository.saveAll(books);
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,32 +1,32 @@
 [
   {
-    "name": "Harry Potter and the Sorcerer's Stone",
-    "author": "J.K. Rowling",
-    "genre": "Fantasy",
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "publisherName": "HBO",
+    "authorName": "J.K. Rowling",
     "publicationYear": 1997
   },
   {
-    "name": "To Kill a Mockingbird",
-    "author": "Harper Lee",
-    "genre": "Fiction",
-    "publicationYear": 1960
+    "title": "Mockingbird",
+    "publisherName": "Eminem",
+    "authorName": "RapGod",
+    "publicationYear": 2010
   },
   {
-    "name": "1984",
-    "author": "George Orwell",
-    "genre": "Dystopian",
-    "publicationYear": 1949
+    "title": "Atomic habits",
+    "publisherName": "James Clear",
+    "authorName": "James Clear",
+    "publicationYear": 2002
   },
   {
-    "name": "The Great Gatsby",
-    "author": "F. Scott Fitzgerald",
-    "genre": "Classic",
-    "publicationYear": 1925
+    "title": "The Greatest Of all Time",
+    "publisherName": "Argentina FC",
+    "authorName": "Lionel Messi",
+    "publicationYear": 2022
   },
   {
-    "name": "The Hobbit",
-    "author": "J.R.R. Tolkien",
-    "genre": "Fantasy",
-    "publicationYear": 1937
+    "title": "The Art of overrated tap-ins and penalties",
+    "publisherName": "Cristiano Ronaldo",
+    "authorName": "Portugal",
+    "publicationYear": 2006
   }
 ]

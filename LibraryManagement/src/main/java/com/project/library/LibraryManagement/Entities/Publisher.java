@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @Builder
@@ -26,8 +29,18 @@ public class Publisher
     )
     private Integer publisherId;
 
+//
+//    @OneToOne(
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.LAZY,
+//            optional = false // this means that only if we add the value in the Books table, only then we can add values into the Publishers column.
+//    )
 
-    @OneToOne
-    @JoinColumn(name = "publisher_name")
-    private Books book;
+    @OneToMany(
+            mappedBy = "publisher", // this is the reference variable that we used to reference this class Publisher.
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+            // we cannot use joinColumn here because it is already defined in the other class where it was linked OneToOne.
+    )
+    private List<Books> books = new ArrayList<>();
 }
