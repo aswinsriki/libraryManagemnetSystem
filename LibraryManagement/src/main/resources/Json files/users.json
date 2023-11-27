@@ -1,0 +1,58 @@
+[
+  {
+    "firstName" : "Aswin",
+    "lastName" : "Srikanth",
+    "emailId" : "aswinsrikanth728@gmail.com",
+    "address" : "G1 Kannika Thendral, Melur Road, Srirangam, Trichy",
+    "userPhoneNo" : 9843639943,
+    "userType" : "ADMIN"
+  },
+  {
+    "firstName" : "Arun",
+    "lastName" : "Tendulkar",
+    "emailId" : "aruntendulkar@gmail.com",
+    "address" : "Anna Nagar, Kumbakonam",
+    "userPhoneNo" : 9597948153,
+    "userType" : "ADMIN"
+  },
+  {
+    "firstName" : "Harish",
+    "lastName" : "Ragavendran",
+    "emailId" : "harishRagav@gmail.com",
+    "address" : "Ullagaram, Chennai",
+    "userPhoneNo" : 9826578125,
+    "userType" : "STUDENT"
+  },
+  {
+    "firstName" : "Praveen",
+    "lastName" : "Kumar",
+    "emailId" : "praveenKumar@gmail.com",
+    "address" : "tambaram, Chennai",
+    "userPhoneNo" : 8736478923,
+    "userType" : "GUEST"
+  },
+  {
+    "firstName" : "Sylendran",
+    "lastName" : "Sharma",
+    "emailId" : "sylendranSharma@gmail.com",
+    "address" : "St. Thomas Mount, Chennai",
+    "userPhoneNo" : 8346783463,
+    "userType" : "STUDENT"
+  },
+  {
+    "firstName" : "Dhyaneshwar",
+    "lastName" : "Reddy",
+    "emailId" : "dhyaneshwar12@gmail.com",
+    "address" : "Kadapa, AndhraPradesh",
+    "userPhoneNo" : 8368376109,
+    "userType" : "GUEST"
+  },
+  {
+    "firstName" : "Pavana",
+    "lastName" : "narasimha",
+    "emailId" : "pavanaNarasimha234@gmail.com",
+    "address" : "Nellore, AndhraPradesh",
+    "userPhoneNo" : 9204834233,
+    "userType" : "ADMIN"
+  }
+]
