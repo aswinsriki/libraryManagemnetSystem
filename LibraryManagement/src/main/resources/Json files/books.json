@@ -3,30 +3,49 @@
     "title": "Harry Potter and the Sorcerer's Stone",
     "publisherName": "HBO",
     "authorName": "J.K. Rowling",
-    "publicationYear": 1997
+    "publicationYear": 1997,
+    "noOfCopies" : 3
   },
   {
     "title": "Mockingbird",
     "publisherName": "Eminem",
     "authorName": "RapGod",
-    "publicationYear": 2010
+    "publicationYear": 2010,
+    "noOfCopies" : 6
   },
   {
     "title": "Atomic habits",
     "publisherName": "James Clear",
     "authorName": "James Clear",
-    "publicationYear": 2002
+    "publicationYear": 2002,
+    "noOfCopies" : 1
   },
   {
     "title": "The Greatest Of all Time",
     "publisherName": "Argentina FC",
     "authorName": "Lionel Messi",
-    "publicationYear": 2022
+    "publicationYear": 2022,
+    "noOfCopies" : 2
   },
   {
     "title": "The Art of overrated tap-ins and penalties",
     "publisherName": "Cristiano Ronaldo",
     "authorName": "Portugal",
-    "publicationYear": 2006
+    "publicationYear": 2006,
+    "noOfCopies" : 2
+  },
+  {
+    "title": "Sorga-Theevu",
+    "publisherName": "Kizhakku",
+    "authorName": "Sujatha",
+    "publicationYear": 1970,
+    "noOfCopies" : 5
+  },
+  {
+    "title": "The Art of credit- stealing",
+    "publisherName": "Chennai Super kings",
+    "authorName": "MSD",
+    "publicationYear": 2011,
+    "noOfCopies" : 100
   }
 ]

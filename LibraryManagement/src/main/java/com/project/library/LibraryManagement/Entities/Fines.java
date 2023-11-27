@@ -29,16 +29,19 @@ public class Fines
     )
     Integer fineId;
 
-    @OneToOne
-    @JoinColumn(name = "transaction_id")
-    private Transactions transaction;
-
-
     private BigDecimal fineAmount;
 
-    private String paymentStatus;
+    @Enumerated
+    @Column(name = "payment_status")
+    private FinePaymentStatus finePaymentStatus;
 
-    private LocalDate paymentDate;
+    private LocalDate dueDate;
+    private LocalDate returnDate;
+
+    public enum FinePaymentStatus{
+        PAID,
+        UNPAID
+    }
 
     @ManyToOne
     @JoinColumn(
@@ -46,4 +49,11 @@ public class Fines
             referencedColumnName = "userId"
     )
     private Users user;
+
+    @OneToOne
+    @JoinColumn(
+            name = "transaction_id",
+            referencedColumnName = "transactionId"
+    )
+    private Transactions transaction;
 }

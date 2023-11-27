@@ -1,20 +1,27 @@
 package com.project.library.LibraryManagement.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.library.LibraryManagement.Entities.Users;
-import com.project.library.LibraryManagement.controller.UserController;
 import com.project.library.LibraryManagement.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Scope(scopeName = "singleton")
 public class UserService
 {
     @Autowired
     private final UserRepository userRepository;
 
+    private boolean dataLoaded = false;
     public List<Users> findUserByLastNameAndFirstName(String lastName, String firstName)
     {
         return userRepository.findByLastNameAndFirstName(lastName, firstName);
@@ -110,6 +117,27 @@ public class UserService
         else
         {
             return null;
+        }
+    }
+
+//    @PostConstruct
+    public void userLoadDataOnStartup()
+    {
+        if(!dataLoaded)
+        {
+            try
+            {
+                ObjectMapper om = new ObjectMapper();
+                ClassPathResource resource = new ClassPathResource("Json files/users.json");
+                File file = resource.getFile();
+                List<Users> users = om.readValue(file, om.getTypeFactory().constructCollectionType(List.class, Users.class));
+                userRepository.saveAll(users);
+                dataLoaded = true;
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }

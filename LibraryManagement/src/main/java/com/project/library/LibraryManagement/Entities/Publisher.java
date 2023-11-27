@@ -27,20 +27,23 @@ public class Publisher
             strategy = GenerationType.AUTO,
             generator = "publisher_sequence"
     )
+    @Column(name = "publisher_id")
     private Integer publisherId;
 
-//
 //    @OneToOne(
 //            cascade = CascadeType.ALL,
 //            fetch = FetchType.LAZY,
-//            optional = false // this means that only if we add the value in the Books table, only then we can add values into the Publishers column.
+//            optional = false // this means that only if we add the value in the Books table, we can add values into the Publishers column.
 //    )
 
+    @ManyToMany(mappedBy = "publishers")
+    private List<Users> users;
+
     @OneToMany(
-            mappedBy = "publisher", // this is the reference variable that we used to reference this class Publisher.
+            mappedBy = "publishers", // this is the reference variable that we used to reference this class Publisher.
             cascade = CascadeType.ALL,
             orphanRemoval = true
             // we cannot use joinColumn here because it is already defined in the other class where it was linked OneToOne.
     )
-    private List<Books> books = new ArrayList<>();
+    private List<Books> books;
 }

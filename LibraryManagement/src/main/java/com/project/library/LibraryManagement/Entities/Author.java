@@ -28,6 +28,7 @@ public class Author
             strategy = GenerationType.IDENTITY,
             generator = "author_sequence"
     )
+    @Column(name = "author_id")
     private Integer authorId;
 
 
@@ -48,12 +49,14 @@ public class Author
                 If we want to define biDirectional relationship, let's go to the Course class and mention along with the foreign key that it is mappedBy this reference variable.
      */
 
+    @ManyToMany(mappedBy = "authorList")
+    private List<Users> user;
 
     @OneToMany(
-            mappedBy = "author", // this is the reference variable that we used to reference this class Author.
+            mappedBy = "authors", // this is the reference variable that we used to reference this class Author.
             cascade = CascadeType.ALL,
             orphanRemoval = true
             // we cannot use joinColumn here because it is already defined in the other class where it was linked OneToOne.
     )
-    private List<Books> books = new ArrayList<>();
+    private List<Books> books;
 }

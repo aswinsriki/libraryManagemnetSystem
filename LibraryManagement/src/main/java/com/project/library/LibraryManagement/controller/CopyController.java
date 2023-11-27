@@ -25,7 +25,7 @@ public class CopyController
         return copyRepository.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Copies> createCopies(@RequestBody Copies copy)
     {
         Copies savedCopy = copyRepository.save(copy);

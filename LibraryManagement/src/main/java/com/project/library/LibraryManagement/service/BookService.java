@@ -2,7 +2,6 @@ package com.project.library.LibraryManagement.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.library.LibraryManagement.Entities.Books;
-import com.project.library.LibraryManagement.Entities.Users;
 import com.project.library.LibraryManagement.repository.BookRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,8 @@ import java.util.Optional;
 public class BookService {
     @Autowired
     private final BookRepository bookRepository;
+
+    private boolean dataLoaded = false;
 
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -88,20 +89,24 @@ public class BookService {
         bookRepository.deleteByAuthorName(authorName);
     }
 
-    @PostConstruct
-    public void loadDataOnStartup()
+//    @PostConstruct
+    public void bookLoadDataOnStartup()
     {
-        try
+        if(!dataLoaded)
         {
-            ObjectMapper om = new ObjectMapper();
-            ClassPathResource resource = new ClassPathResource("books.json");
-            File file = resource.getFile();
-            List<Books> books = om.readValue(file, om.getTypeFactory().constructCollectionType(List.class, Books.class));
-            bookRepository.saveAll(books);
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
+            try
+            {
+                ObjectMapper om = new ObjectMapper();
+                ClassPathResource resource = new ClassPathResource("Json files/books.json");
+                File file = resource.getFile();
+                List<Books> books = om.readValue(file, om.getTypeFactory().constructCollectionType(List.class, Books.class));
+                bookRepository.saveAll(books);
+                dataLoaded = true;
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }

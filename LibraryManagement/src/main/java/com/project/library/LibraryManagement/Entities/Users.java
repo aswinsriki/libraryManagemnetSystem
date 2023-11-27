@@ -28,10 +28,6 @@ public class Users
             generator = "user_sequence"
     )
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Transactions> transactions = new ArrayList<>();
-
-
     private Integer userId;
     private String firstName;
     private String lastName;
@@ -50,6 +46,31 @@ public class Users
         GUEST,
         STUDENT
     }
+
+    @ManyToMany(mappedBy = "user")
+    private List<Books> books;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_publisher_map",
+            joinColumns = @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "userId"
+            ),
+            inverseJoinColumns = @JoinColumn(name = "publisher_id")
+    )
+    private List<Publisher> publishers;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_author_map",
+            joinColumns = @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "userId"
+            ),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<Author> authorList;
 
     @OneToMany(
             mappedBy = "user",

@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 @Table(name = "books")
 public class Books {
+
     @Id
     @SequenceGenerator(
             name = "book_sequence",
@@ -29,23 +30,21 @@ public class Books {
     private Integer bookId;
     private String title;
 
+    public Books(Integer bookId)
+    {
+        this.bookId = bookId;
+    }
+
     @Column(name = "publisher_name")
     private String publisherName;
+
+    @Column(name = "no_of_copies")
+    private Integer noOfCopies;
 
     @Column(name = "author_name")
     private String authorName;
 
     private Long publicationYear;
-
-//    @OneToMany(
-//            cascade = CascadeType.ALL
-//    )
-//
-//    @JoinColumn(
-//            name = "book_id",
-//            referencedColumnName = "bookId"
-//    )
-//    private List<Copies> copies;
 
     @OneToMany(
             mappedBy = "book",
@@ -53,29 +52,23 @@ public class Books {
     )
     private List<Transactions> transactions;
 
-//    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Transactions> Transactions = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "book",
+            cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Copies> copies;
 
+
     @ManyToOne
-    @JoinColumn(
-            name = "author_id",
-            referencedColumnName = "authorId"
-    )
-    private Author author;
+    @JoinColumn(name = "author_id")
+    private Author authors;
 
 
     @ManyToOne
-    @JoinColumn(
-            name = "publisher_id",
-            referencedColumnName = "publisherId"
-    )
-    private Publisher publisher;
+    @JoinColumn(name = "publisher_id")
+    private Publisher publishers;
 
     @ManyToMany
     @JoinTable(
@@ -89,6 +82,6 @@ public class Books {
                     referencedColumnName = "userId"
             )
     )
-    private List<Users> users;
+    private List<Users> user;
 }
 

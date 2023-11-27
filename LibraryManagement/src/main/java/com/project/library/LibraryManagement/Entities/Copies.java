@@ -27,36 +27,7 @@ public class Copies
             strategy = GenerationType.IDENTITY,
             generator = "copy_sequence"
     )
-    private int copyId;
-
-
-    @ManyToOne(
-            cascade = CascadeType.ALL
-    )
-    @JoinColumn(
-            name = "book_id",
-            referencedColumnName = "bookId"
-    )
-    private Books book;
-
-
-    @OneToMany(
-            mappedBy = "copy",
-            orphanRemoval = true
-    )
-    private List<Transactions> transactions;
-
-
-    private Integer noOfCopies;
-
-    @Column(name = "availability_status")
-    @Enumerated(EnumType.STRING)
-    private AvailabilityStatus availabilityStatus;
-
-
-    @Column(name="physical_condition")
-    @Enumerated(EnumType.STRING)
-    private PhysicalCondition physicalCondition;
+    private Integer copyId;
 
     public enum AvailabilityStatus
     {
@@ -71,4 +42,25 @@ public class Copies
         FAIR,
         DAMAGED
     }
+
+    @Column(name = "availability_status")
+    @Enumerated(EnumType.STRING)
+    private AvailabilityStatus availabilityStatus;
+
+
+    @Column(name="physical_condition")
+    @Enumerated(EnumType.STRING)
+    private PhysicalCondition physicalCondition;
+
+
+
+    @ManyToOne(
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(
+            name = "book_id",
+            referencedColumnName = "bookId",
+            nullable = false
+    )
+    private Books book;
 }

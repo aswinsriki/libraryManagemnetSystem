@@ -16,23 +16,20 @@ public class FineService {
     @Autowired
     private FineRepository fineRepository;
 
-//    @Autowired
-//    private Transactions transaction;
+//    public Double calculateFineValueByFineId(Integer fineId) {
+//        List<Fines> fines = fineRepository.findByFineId(fineId);
 //
-////    public Double calculateFineValueByUserId(Integer userId) {
-////        List<Fines> fines = fineRepository.findByUserId(userId);
-////
-////        return calculateFine();
-////    }
-//
-//    public double calculateFine() {
-//
-//        double fineValue = 0.0;
-//
-//        if (transaction.getReturnDate().isAfter(transaction.getDueDate())) {
-//            long daysOverdue = ChronoUnit.DAYS.between(transaction.getDueDate(), transaction.getReturnDate());
-//            fineValue = daysOverdue * 2.0;
-//        }
-//        return fineValue;
+//        return calculateFine();
 //    }
+
+    public double calculateFine(Fines fines) {
+
+        double fineValue = 0.0;
+
+        if (fines.getReturnDate().isAfter(fines.getDueDate())) {
+            long daysOverdue = ChronoUnit.DAYS.between(fines.getDueDate(), fines.getReturnDate());
+            fineValue = daysOverdue * 2.0;
+        }
+        return fineValue;
+    }
 }
