@@ -54,13 +54,10 @@ public class Copies
 
 
 
-    @ManyToOne(
-            cascade = CascadeType.ALL
-    )
+    @ManyToOne
     @JoinColumn(
             name = "book_id",
-            referencedColumnName = "bookId",
-            nullable = false
+            referencedColumnName = "bookId"
     )
     private Books book;
 }

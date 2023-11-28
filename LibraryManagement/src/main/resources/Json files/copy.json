@@ -1,9 +1,10 @@
 [
     {
-        "book": {
+        "availabilityStatus": "AVAILABLE",
+        "physicalCondition": "FAIR",
+        "book":
+        {
             "bookId": 2
-        },
-        "availabilityStatus" : "DAMAGED",
-        "physicalCondition" : "DAMAGED"
+        }
     }
 ]

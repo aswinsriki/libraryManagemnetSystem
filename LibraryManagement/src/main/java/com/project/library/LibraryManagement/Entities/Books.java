@@ -63,12 +63,12 @@ public class Books {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    private Author authors;
+    private Author author;
 
 
     @ManyToOne
     @JoinColumn(name = "publisher_id")
-    private Publisher publishers;
+    private Publisher publisher;
 
     @ManyToMany
     @JoinTable(

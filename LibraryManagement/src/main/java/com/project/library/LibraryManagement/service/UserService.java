@@ -120,8 +120,8 @@ public class UserService
         }
     }
 
-//    @PostConstruct
-    public void userLoadDataOnStartup()
+    @PostConstruct
+    public void loadUserDataOnStartup()
     {
         if(!dataLoaded)
         {

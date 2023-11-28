@@ -89,8 +89,8 @@ public class BookService {
         bookRepository.deleteByAuthorName(authorName);
     }
 
-//    @PostConstruct
-    public void bookLoadDataOnStartup()
+    @PostConstruct
+    public void loadBookDataOnStartup()
     {
         if(!dataLoaded)
         {
