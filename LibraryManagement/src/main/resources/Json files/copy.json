@@ -2,9 +2,6 @@
     {
         "availabilityStatus": "AVAILABLE",
         "physicalCondition": "FAIR",
-        "book":
-        {
-            "bookId": 2
-        }
+        "bookId": 2
     }
 ]

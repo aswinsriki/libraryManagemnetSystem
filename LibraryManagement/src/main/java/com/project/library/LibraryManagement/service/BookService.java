@@ -3,6 +3,7 @@ package com.project.library.LibraryManagement.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.library.LibraryManagement.Entities.Books;
 import com.project.library.LibraryManagement.repository.BookRepository;
+import com.project.library.LibraryManagement.repository.TransactionRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +30,7 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Optional<Books> getBookById(Integer id)
-    {
+    public Optional<Books> getBookById(Integer id) {
         return bookRepository.findById(id);
     }
 
@@ -41,8 +42,7 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    public Books updateBookById(Integer id, Books updatedBook)
-    {
+    public Books updateBookById(Integer id, Books updatedBook) {
         Optional<Books> existingUserOptional = bookRepository.findById(id);
 
         if (existingUserOptional.isPresent()) {
@@ -79,8 +79,7 @@ public class BookService {
         return bookRepository.findByTitle(title);
     }
 
-    public List<Books> getBooksByPublicationYear(Long publicationYear)
-    {
+    public List<Books> getBooksByPublicationYear(Long publicationYear) {
         return bookRepository.findByPublicationYear(publicationYear);
     }
 
@@ -90,23 +89,22 @@ public class BookService {
     }
 
     @PostConstruct
-    public void loadBookDataOnStartup()
-    {
-        if(!dataLoaded)
-        {
-            try
-            {
+    public void loadBookDataOnStartup() {
+        if (!dataLoaded) {
+            try {
                 ObjectMapper om = new ObjectMapper();
                 ClassPathResource resource = new ClassPathResource("Json files/books.json");
                 File file = resource.getFile();
                 List<Books> books = om.readValue(file, om.getTypeFactory().constructCollectionType(List.class, Books.class));
                 bookRepository.saveAll(books);
                 dataLoaded = true;
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    @Autowired
+    private TransactionRepository transactionRepository;
+
 }
